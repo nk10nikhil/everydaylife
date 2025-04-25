@@ -56,7 +56,7 @@ const HomePage = () => {
         <section ref={heroRef} className="relative h-[90vh] bg-neutral-100 overflow-hidden">
           <div className="absolute inset-0">
             <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1500"
+              src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=1500"
               alt="Modern minimalist living room"
               className="w-full h-full object-cover"
             />
