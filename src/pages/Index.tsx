@@ -103,7 +103,7 @@ const HomePage = () => {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 grid-rows-2 sm:grid-cols-2 sm:grid-rows-2 lg:grid-cols-3 lg:grid-rows-1 gap-4 sm:gap-8">
               {categories.slice(0, 3).map(category => (
                 <Link
                   to={`/category/${category.id}`}
@@ -115,8 +115,8 @@ const HomePage = () => {
                     alt={category.name}
                     className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center p-6">
-                    <h3 className="text-white text-2xl font-serif">{category.name}</h3>
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center p-4 sm:p-6">
+                    <h3 className="text-white text-lg sm:text-xl md:text-2xl font-serif text-center">{category.name}</h3>
                   </div>
                 </Link>
               ))}
@@ -135,7 +135,7 @@ const HomePage = () => {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {featuredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -157,7 +157,7 @@ const HomePage = () => {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {newArrivals.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -200,7 +200,7 @@ const HomePage = () => {
               Join our community and share how you style our pieces in your home.
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 sm:gap-0">
             <a href="#" className="group relative aspect-square overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=300"

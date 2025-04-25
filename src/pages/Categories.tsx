@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -10,7 +9,7 @@ const Categories = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      
+
       <main className="flex-grow">
         <section className="bg-secondary py-16">
           <div className="container-custom">
@@ -20,10 +19,10 @@ const Categories = () => {
             </p>
           </div>
         </section>
-        
+
         <section className="py-12">
           <div className="container-custom">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
               {categories.map((category) => (
                 <Link
                   key={category.id}
@@ -39,8 +38,11 @@ const Categories = () => {
                   </div>
                   <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                     <div className="text-center text-white">
-                      <Tags className="mx-auto mb-3" size={32} />
-                      <h2 className="text-2xl font-serif">{category.name}</h2>
+                      <Tags
+                        className="mx-auto mb-2 sm:mb-3"
+                        size={window.innerWidth >= 640 ? 32 : 24}
+                      />
+                      <h2 className="text-lg sm:text-2xl font-serif">{category.name}</h2>
                     </div>
                   </div>
                 </Link>
@@ -49,7 +51,7 @@ const Categories = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );

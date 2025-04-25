@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
@@ -30,7 +29,7 @@ const Shop = () => {
   const [priceRange, setPriceRange] = useState([0, 400]);
   const [sortBy, setSortBy] = useState("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  
+
   // Get category filter from URL if present
   useEffect(() => {
     const categoryParam = searchParams.get("category");
@@ -38,23 +37,23 @@ const Shop = () => {
       setSelectedCategories([categoryParam]);
     }
   }, [searchParams]);
-  
+
   // Apply filters
   useEffect(() => {
     let result = [...products];
-    
+
     // Filter by category
     if (selectedCategories.length > 0) {
-      result = result.filter(product => 
+      result = result.filter(product =>
         selectedCategories.includes(product.category)
       );
     }
-    
+
     // Filter by price
-    result = result.filter(product => 
+    result = result.filter(product =>
       product.price >= priceRange[0] && product.price <= priceRange[1]
     );
-    
+
     // Apply sorting
     switch (sortBy) {
       case "price-low":
@@ -68,19 +67,19 @@ const Shop = () => {
         break;
       // "featured" is default, no sorting needed
     }
-    
+
     setFilteredProducts(result);
   }, [selectedCategories, priceRange, sortBy]);
-  
+
   // Toggle category selection
   const toggleCategory = (category: string) => {
-    setSelectedCategories(prev => 
+    setSelectedCategories(prev =>
       prev.includes(category)
         ? prev.filter(c => c !== category)
         : [...prev, category]
     );
   };
-  
+
   // Clear all filters
   const clearFilters = () => {
     setSelectedCategories([]);
@@ -88,11 +87,11 @@ const Shop = () => {
     setSortBy("featured");
     setSearchParams({});
   };
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      
+
       <main className="flex-grow">
         {/* Shop header */}
         <section className="bg-secondary py-16">
@@ -103,7 +102,7 @@ const Shop = () => {
             </p>
           </div>
         </section>
-        
+
         {/* Shop content */}
         <section className="py-12">
           <div className="container-custom">
@@ -114,13 +113,15 @@ const Shop = () => {
                   Filters
                 </Button>
                 <div className="flex items-center space-x-2">
-                  <button 
+                  <button
+                    title="Grid View"
                     onClick={() => setViewMode("grid")}
                     className={`p-2 ${viewMode === "grid" ? "text-primary" : "text-muted-foreground"}`}
                   >
                     <GridIcon size={20} />
                   </button>
-                  <button 
+                  <button
+                    title="List View"
                     onClick={() => setViewMode("list")}
                     className={`p-2 ${viewMode === "list" ? "text-primary" : "text-muted-foreground"}`}
                   >
@@ -128,14 +129,14 @@ const Shop = () => {
                   </button>
                 </div>
               </div>
-              
+
               {/* Sidebar filters - desktop */}
               <div className="hidden lg:block">
                 <div className="sticky top-24">
                   <div className="flex justify-between items-center mb-8">
                     <h3 className="font-medium">Filters</h3>
                     {(selectedCategories.length > 0 || priceRange[0] > 0 || priceRange[1] < 400) && (
-                      <button 
+                      <button
                         className="text-sm text-muted-foreground hover:text-primary"
                         onClick={clearFilters}
                       >
@@ -143,7 +144,7 @@ const Shop = () => {
                       </button>
                     )}
                   </div>
-                  
+
                   <Accordion type="multiple" defaultValue={["categories", "price"]}>
                     <AccordionItem value="categories">
                       <AccordionTrigger>Categories</AccordionTrigger>
@@ -151,12 +152,12 @@ const Shop = () => {
                         <div className="space-y-2">
                           {categories.map(category => (
                             <div key={category.id} className="flex items-center space-x-2">
-                              <Checkbox 
+                              <Checkbox
                                 id={category.id}
                                 checked={selectedCategories.includes(category.name)}
                                 onCheckedChange={() => toggleCategory(category.name)}
                               />
-                              <label 
+                              <label
                                 htmlFor={category.id}
                                 className="text-sm cursor-pointer"
                               >
@@ -167,12 +168,12 @@ const Shop = () => {
                         </div>
                       </AccordionContent>
                     </AccordionItem>
-                    
+
                     <AccordionItem value="price">
                       <AccordionTrigger>Price Range</AccordionTrigger>
                       <AccordionContent>
                         <div className="px-2">
-                          <Slider 
+                          <Slider
                             defaultValue={[0, 400]}
                             min={0}
                             max={400}
@@ -190,7 +191,7 @@ const Shop = () => {
                   </Accordion>
                 </div>
               </div>
-              
+
               {/* Products grid */}
               <div className="lg:col-span-3">
                 <div className="flex justify-between items-center mb-8">
@@ -199,20 +200,22 @@ const Shop = () => {
                   </p>
                   <div className="flex items-center space-x-4">
                     <div className="hidden lg:flex items-center space-x-2">
-                      <button 
+                      <button
+                        title="Grid View"
                         onClick={() => setViewMode("grid")}
                         className={`p-2 ${viewMode === "grid" ? "text-primary" : "text-muted-foreground"}`}
                       >
                         <GridIcon size={20} />
                       </button>
-                      <button 
+                      <button
+                        title="List View"
                         onClick={() => setViewMode("list")}
                         className={`p-2 ${viewMode === "list" ? "text-primary" : "text-muted-foreground"}`}
                       >
                         <List size={20} />
                       </button>
                     </div>
-                    
+
                     <Select value={sortBy} onValueChange={setSortBy}>
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Sort by" />
@@ -226,14 +229,16 @@ const Shop = () => {
                     </Select>
                   </div>
                 </div>
-                
+
                 {/* Active filters */}
                 {(selectedCategories.length > 0 || priceRange[0] > 0 || priceRange[1] < 400) && (
                   <div className="flex flex-wrap gap-2 mb-6">
                     {selectedCategories.map(cat => (
                       <div key={cat} className="bg-secondary text-sm px-3 py-1 rounded-full flex items-center">
                         {cat}
-                        <button 
+                        <button
+                          
+                          title="Remove Category"
                           className="ml-2"
                           onClick={() => toggleCategory(cat)}
                         >
@@ -241,11 +246,12 @@ const Shop = () => {
                         </button>
                       </div>
                     ))}
-                    
+
                     {(priceRange[0] > 0 || priceRange[1] < 400) && (
                       <div className="bg-secondary text-sm px-3 py-1 rounded-full flex items-center">
                         ${priceRange[0]} - ${priceRange[1]}
-                        <button 
+                        <button
+                          title="Remove Price Range"
                           className="ml-2"
                           onClick={() => setPriceRange([0, 400])}
                         >
@@ -255,10 +261,10 @@ const Shop = () => {
                     )}
                   </div>
                 )}
-                
+
                 {filteredProducts.length > 0 ? (
-                  <div className={viewMode === "grid" 
-                    ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" 
+                  <div className={viewMode === "grid"
+                    ? "grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
                     : "space-y-6"
                   }>
                     {filteredProducts.map(product => (
@@ -267,9 +273,9 @@ const Shop = () => {
                       ) : (
                         <div key={product.id} className="flex border-b pb-6">
                           <div className="w-1/3 aspect-square">
-                            <img 
-                              src={product.image} 
-                              alt={product.name} 
+                            <img
+                              src={product.image}
+                              alt={product.name}
                               className="w-full h-full object-cover"
                             />
                           </div>
@@ -295,7 +301,7 @@ const Shop = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );

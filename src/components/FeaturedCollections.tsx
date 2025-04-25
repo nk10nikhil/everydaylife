@@ -39,7 +39,7 @@ const FeaturedCollections = () => {
             <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
           {collections.map((collection) => (
             <Link
               key={collection.id}
@@ -51,12 +51,12 @@ const FeaturedCollections = () => {
                 alt={collection.name}
                 className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6 text-white">
-                <h3 className="text-2xl font-serif mb-2">{collection.name}</h3>
-                <p className="text-white/80 mb-4">{collection.description}</p>
-                <div className="flex items-center text-sm font-medium opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-3 sm:p-6 text-white">
+                <h3 className="text-lg sm:text-2xl font-serif mb-1 sm:mb-2">{collection.name}</h3>
+                <p className="text-white/80 text-sm sm:text-base mb-2 sm:mb-4">{collection.description}</p>
+                <div className="flex items-center text-xs sm:text-sm font-medium opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
                   Explore Collection
-                  <ArrowRight size={14} className="ml-2" />
+                  <ArrowRight size={12} className="ml-2" />
                 </div>
               </div>
             </Link>
