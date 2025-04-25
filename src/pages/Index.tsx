@@ -175,7 +175,7 @@ const HomePage = () => {
               <div>
                 <h2 className="text-3xl md:text-4xl font-serif mb-6">Thoughtfully Designed. Sustainably Crafted.</h2>
                 <p className="text-muted-foreground mb-8">
-                  At Aesthetic Haven, we believe in the power of intentional living. Our products are designed to bring beauty and functionality to your everyday routines, while respecting our planet and its resources.
+                  At Every Day Life, we believe in the power of intentional living. Our products are designed to bring beauty and functionality to your everyday routines, while respecting our planet and its resources.
                 </p>
                 <Button asChild>
                   <Link to="/about">Our Story</Link>

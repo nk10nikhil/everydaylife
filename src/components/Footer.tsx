@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Send } from "lucide-react";
 
@@ -25,10 +24,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About Column */}
           <div>
-            <h4 className="font-serif text-lg mb-4">Aesthetic Haven</h4>
+            <h4 className="font-serif text-lg mb-4">Every Day Life</h4>
             <p className="text-muted-foreground text-sm">
               A curated collection of minimalist and aesthetic products designed to elevate your everyday life.
             </p>
+            <div className="mt-4 space-y-2 text-sm text-muted-foreground">
+              <p>Delhi, India</p>
+              <p>Phone: +91 7777048666</p>
+              <p>Email: nk10nikhil@gmail.com</p>
+            </div>
             <div className="mt-4 flex space-x-4">
               <a href="#" className="hover:text-primary" aria-label="Facebook">
                 <Facebook size={18} />
@@ -77,9 +81,13 @@ const Footer = () => {
         </div>
 
         <div className="border-t mt-16 pt-8 text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center">
-          <p>&copy; {new Date().getFullYear()} Aesthetic Haven. All rights reserved.</p>
-          <div className="mt-4 md:mt-0">
-            <img src="https://via.placeholder.com/200x30?text=Payment+Methods" alt="Payment methods" className="h-5" />
+          <p>&copy; {new Date().getFullYear()} Every Day Life. All rights reserved.</p>
+          <div className="mt-4 md:mt-0 flex gap-2">
+            <div className="w-10 h-6 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">VISA</div>
+            <div className="w-10 h-6 bg-red-500 rounded flex items-center justify-center text-white text-xs font-bold">MC</div>
+            <div className="w-10 h-6 bg-gray-800 rounded flex items-center justify-center text-white text-xs">AmEx</div>
+            <div className="w-10 h-6 bg-yellow-400 rounded flex items-center justify-center text-black text-xs font-bold">GPay</div>
+            <div className="w-10 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">PayP</div>
           </div>
         </div>
       </div>

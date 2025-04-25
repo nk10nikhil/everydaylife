@@ -39,7 +39,7 @@ const Header = () => {
         </button>
 
         <div className="flex-1 md:flex-initial text-center md:text-left">
-          <Link to="/" className="font-serif text-2xl font-medium">Aesthetic Haven</Link>
+          <Link to="/" className="font-serif text-2xl font-medium">Every Day Life</Link>
         </div>
 
         <nav className="hidden md:flex items-center space-x-8">
@@ -111,7 +111,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="fixed inset-0 bg-background z-50 animate-fade-in">
           <div className="container-custom py-4 flex justify-between items-center">
-            <Link to="/" className="font-serif text-2xl font-medium">Aesthetic Haven</Link>
+            <Link to="/" className="font-serif text-2xl font-medium">Every Day Life</Link>
             <button onClick={toggleMenu} className="p-2" aria-label="Close menu">
               <X size={22} />
             </button>
