@@ -208,7 +208,7 @@ const HomePage = () => {
                 className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-medium">@aesthetichaven</span>
+                <span className="text-white font-medium">@everydaylife</span>
               </div>
             </a>
             <a href="#" className="group relative aspect-square overflow-hidden">
@@ -218,7 +218,7 @@ const HomePage = () => {
                 className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-medium">@aesthetichaven</span>
+                <span className="text-white font-medium">@everydaylife</span>
               </div>
             </a>
             <a href="#" className="group relative aspect-square overflow-hidden">
@@ -228,7 +228,7 @@ const HomePage = () => {
                 className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-medium">@aesthetichaven</span>
+                <span className="text-white font-medium">@everydaylife</span>
               </div>
             </a>
             <a href="#" className="group relative aspect-square overflow-hidden">
@@ -238,17 +238,17 @@ const HomePage = () => {
                 className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-medium">@aesthetichaven</span>
+                <span className="text-white font-medium">@everydaylife</span>
               </div>
             </a>
             <a href="#" className="group relative aspect-square overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1633505412556-82c0918e5513?q=80&w=300"
+                src="https://images.unsplash.com/photo-1556185781-a47769abb7ee?q=80&w=300"
                 alt="Instagram post 5"
                 className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-medium">@aesthetichaven</span>
+                <span className="text-white font-medium">@everydaylife</span>
               </div>
             </a>
             <a href="#" className="group relative aspect-square overflow-hidden">
@@ -258,7 +258,7 @@ const HomePage = () => {
                 className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-medium">@aesthetichaven</span>
+                <span className="text-white font-medium">@everydaylife</span>
               </div>
             </a>
           </div>

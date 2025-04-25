@@ -13,7 +13,7 @@ const collections = [
     id: 2,
     name: "Minimalist Living",
     description: "Simplify your space",
-    image: "https://images.unsplash.com/photo-1517097625415-4976d22cb2bd?q=80&w=1500",
+    image: "https://plus.unsplash.com/premium_photo-1683910490876-074a2e18ca10?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 3,
