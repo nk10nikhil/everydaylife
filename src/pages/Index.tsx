@@ -56,7 +56,7 @@ const HomePage = () => {
         <section ref={heroRef} className="relative h-[90vh] bg-neutral-100 overflow-hidden">
           <div className="absolute inset-0">
             <img
-              src="https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=1500"
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1500"
               alt="Modern minimalist living room"
               className="w-full h-full object-cover"
             />
@@ -201,18 +201,66 @@ const HomePage = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <a href="#" key={i} className="group relative aspect-square overflow-hidden">
-                <img
-                  src={`https://source.unsplash.com/random/300x300?interior,minimalist&sig=${i}`}
-                  alt={`Instagram post ${i + 1}`}
-                  className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="text-white font-medium">@aesthetichaven</span>
-                </div>
-              </a>
-            ))}
+            <a href="#" className="group relative aspect-square overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=300"
+                alt="Instagram post 1"
+                className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white font-medium">@aesthetichaven</span>
+              </div>
+            </a>
+            <a href="#" className="group relative aspect-square overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=300"
+                alt="Instagram post 2"
+                className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white font-medium">@aesthetichaven</span>
+              </div>
+            </a>
+            <a href="#" className="group relative aspect-square overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1615529162924-f8605388461d?q=80&w=300"
+                alt="Instagram post 3"
+                className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white font-medium">@aesthetichaven</span>
+              </div>
+            </a>
+            <a href="#" className="group relative aspect-square overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=300"
+                alt="Instagram post 4"
+                className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white font-medium">@aesthetichaven</span>
+              </div>
+            </a>
+            <a href="#" className="group relative aspect-square overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1633505412556-82c0918e5513?q=80&w=300"
+                alt="Instagram post 5"
+                className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white font-medium">@aesthetichaven</span>
+              </div>
+            </a>
+            <a href="#" className="group relative aspect-square overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1602872030490-4a484a7b3ba6?q=80&w=300"
+                alt="Instagram post 6"
+                className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white font-medium">@aesthetichaven</span>
+              </div>
+            </a>
           </div>
         </section>
       </main>

@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -8,19 +7,19 @@ const collections = [
     id: 1,
     name: "Spring Collection",
     description: "Fresh designs for the new season",
-    image: "https://images.unsplash.com/photo-1594026112284-02bb6f3352fe?q=80&w=1500",
+    image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1500",
   },
   {
     id: 2,
     name: "Minimalist Living",
     description: "Simplify your space",
-    image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=1500",
+    image: "https://images.unsplash.com/photo-1517097625415-4976d22cb2bd?q=80&w=1500",
   },
   {
     id: 3,
     name: "Workspace Essentials",
     description: "Enhance your productivity",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1500",
+    image: "https://images.unsplash.com/photo-1517705008128-361805f42e86?q=80&w=1500",
   },
 ];
 

@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { User, ShoppingBag, Heart, LogOut, CreditCard, Settings, MapPin } from "lucide-react";
 import Header from "@/components/Header";
@@ -9,26 +8,260 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
+import { useOrder } from "@/context/OrderContext";
+import { useCart } from "@/context/CartContext";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+
+// Login component for unauthorized users
+const LoginForm = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login, register } = useAuth();
+  const [isRegisterMode, setIsRegisterMode] = useState(
+    new URLSearchParams(location.search).get("register") === "true"
+  );
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    confirmPassword: ""
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (isRegisterMode) {
+      // Validation for registration
+      if (!formData.firstName || !formData.lastName || !formData.email || !formData.password || !formData.confirmPassword) {
+        setError("All fields are required");
+        return;
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+
+      if (formData.password.length < 8) {
+        setError("Password must be at least 8 characters long");
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        await register({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName,
+          lastName: formData.lastName
+        });
+        toast.success("Account created successfully!");
+        navigate('/account');
+      } catch (error: any) {
+        setError(error.message || "Registration failed. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      // Login logic
+      if (!formData.email || !formData.password) {
+        setError("Email and password are required");
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        await login(formData.email, formData.password);
+        toast.success("Logged in successfully!");
+        navigate('/account');
+      } catch (error: any) {
+        setError(error.message || "Invalid email or password");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  return (
+    <div className="flex justify-center py-10">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>{isRegisterMode ? "Create Account" : "Sign In"}</CardTitle>
+          <CardDescription>
+            {isRegisterMode
+              ? "Fill out the form below to create your account"
+              : "Enter your credentials to access your account"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="bg-destructive/10 text-destructive p-3 rounded-md text-sm mb-4">
+                {error}
+              </div>
+            )}
+
+            {isRegisterMode && (
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className="mt-1"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                className="mt-1"
+              />
+            </div>
+
+            {isRegisterMode && (
+              <div>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  className="mt-1"
+                />
+              </div>
+            )}
+
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Processing..." : isRegisterMode ? "Create Account" : "Sign In"}
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter className="flex flex-col">
+          <div className="text-center w-full">
+            {isRegisterMode ? (
+              <p>
+                Already have an account?{" "}
+                <Button
+                  variant="link"
+                  onClick={() => setIsRegisterMode(false)}
+                  className="p-0"
+                >
+                  Sign In
+                </Button>
+              </p>
+            ) : (
+              <p>
+                Don't have an account?{" "}
+                <Button
+                  variant="link"
+                  onClick={() => setIsRegisterMode(true)}
+                  className="p-0"
+                >
+                  Create one
+                </Button>
+              </p>
+            )}
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+};
 
 const Account = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAuthenticated, user, logout, updateUserProfile } = useAuth();
+  const { getUserOrders } = useOrder();
+  const { wishlist, removeFromWishlist, addToCart } = useCart();
+
   const [activeTab, setActiveTab] = useState(
-    location.hash ? location.hash.substring(1) : "profile"
+    location.pathname.includes('/orders') ? "orders" : "profile"
   );
-  
+
   const [profile, setProfile] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "(555) 123-4567",
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
     currentPassword: "",
     newPassword: "",
     confirmPassword: ""
   });
-  
+
   const [isEditing, setIsEditing] = useState(false);
-  
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Update profile state when user data changes
+  useEffect(() => {
+    if (user) {
+      setProfile(prev => ({
+        ...prev,
+        firstName: user.firstName || prev.firstName,
+        lastName: user.lastName || prev.lastName,
+        email: user.email || prev.email,
+        phone: user.phone || prev.phone,
+      }));
+    }
+  }, [user]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfile({
@@ -36,10 +269,10 @@ const Account = () => {
       [name]: value,
     });
   };
-  
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate password change if attempting to change password
     if (profile.newPassword) {
       if (!profile.currentPassword) {
@@ -55,103 +288,74 @@ const Account = () => {
         return;
       }
     }
-    
-    // Simulate saving profile
-    setTimeout(() => {
+
+    try {
+      setIsSaving(true);
+
+      await updateUserProfile({
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        phone: profile.phone,
+      });
+
       toast.success("Profile updated successfully");
       setIsEditing(false);
-      setProfile({
-        ...profile,
+      setProfile(prev => ({
+        ...prev,
         currentPassword: "",
         newPassword: "",
         confirmPassword: ""
-      });
-    }, 500);
+      }));
+    } catch (error: any) {
+      toast.error(error.message || "Failed to update profile");
+    } finally {
+      setIsSaving(false);
+    }
   };
-  
+
   const handleLogout = () => {
+    logout();
     toast.success("You have been logged out");
     navigate("/");
   };
-  
-  // Sample orders
-  const orders = [
-    { 
-      id: "ORD12345678", 
-      date: "2023-04-18", 
-      status: "Delivered", 
-      total: 129.99,
-      items: [
-        { name: "Minimalist Ceramic Vase", price: 49.99, quantity: 1 },
-        { name: "Organic Cotton Throw Blanket", price: 79.99, quantity: 1 }
-      ]
-    },
-    { 
-      id: "ORD87654321", 
-      date: "2023-03-05", 
-      status: "Delivered", 
-      total: 89.99,
-      items: [
-        { name: "Japanese Ceramic Teapot Set", price: 89.99, quantity: 1 }
-      ]
-    }
-  ];
-  
-  // Sample addresses
-  const addresses = [
+
+  const orders = getUserOrders();
+
+  // Sample addresses - would come from user data in a real implementation
+  const addresses = user?.address ? [
     {
       id: "addr1",
       default: true,
-      name: "John Doe",
-      line1: "123 Main St",
-      line2: "Apt 4B",
-      city: "Anytown",
-      state: "ST",
-      zip: "12345",
-      country: "United States"
-    },
-    {
-      id: "addr2",
-      default: false,
-      name: "John Doe",
-      line1: "456 Work Ave",
+      name: `${user.firstName} ${user.lastName}`,
+      line1: user.address.street,
       line2: "",
-      city: "Business City",
-      state: "ST",
-      zip: "67890",
-      country: "United States"
+      city: user.address.city,
+      state: user.address.state,
+      zip: user.address.postalCode,
+      country: user.address.country
     }
-  ];
-  
-  // Sample wishlist items
-  const wishlist = [
-    {
-      id: "1",
-      name: "Scandinavian Side Table",
-      price: 129.99,
-      image: "https://images.unsplash.com/photo-1532372320572-cda25653a694?q=80&w=700",
-    },
-    {
-      id: "2",
-      name: "Minimalist Wall Clock",
-      price: 79.99,
-      image: "https://images.unsplash.com/photo-1563861826100-c596f5cb19fe?q=80&w=700",
-    },
-    {
-      id: "3",
-      name: "Cotton Macramé Wall Hanging",
-      price: 69.99,
-      image: "https://images.unsplash.com/photo-1522758971460-1d21eed7dc1d?q=80&w=700",
-    }
-  ];
-  
+  ] : [];
+
+  // If not authenticated, show login/register form
+  if (!isAuthenticated) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow container-custom">
+          <LoginForm />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      
+
       <main className="flex-grow container-custom py-10">
         <h1 className="text-3xl font-serif mb-10">My Account</h1>
-        
+
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
           <div className="border-b">
             <TabsList className="bg-transparent -mb-px">
@@ -167,15 +371,12 @@ const Account = () => {
               <TabsTrigger value="wishlist" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
                 <Heart size={18} className="mr-2" /> Wishlist
               </TabsTrigger>
-              <TabsTrigger value="payment" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
-                <CreditCard size={18} className="mr-2" /> Payment Methods
-              </TabsTrigger>
               <TabsTrigger value="settings" className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none">
                 <Settings size={18} className="mr-2" /> Settings
               </TabsTrigger>
             </TabsList>
           </div>
-          
+
           {/* Profile Tab */}
           <TabsContent value="profile" className="space-y-8">
             <div className="max-w-2xl">
@@ -187,7 +388,7 @@ const Account = () => {
                   <Button variant="ghost" onClick={() => setIsEditing(false)}>Cancel</Button>
                 )}
               </div>
-              
+
               {!isEditing ? (
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -206,7 +407,7 @@ const Account = () => {
                   </div>
                   <div>
                     <h3 className="text-sm text-muted-foreground mb-1">Phone Number</h3>
-                    <p>{profile.phone}</p>
+                    <p>{profile.phone || "Not provided"}</p>
                   </div>
                   <div className="pt-4">
                     <Button variant="outline" onClick={handleLogout}>
@@ -249,7 +450,9 @@ const Account = () => {
                         value={profile.email}
                         onChange={handleInputChange}
                         className="mt-1"
+                        disabled
                       />
+                      <p className="text-xs text-muted-foreground mt-1">Email address cannot be changed</p>
                     </div>
                     <div>
                       <Label htmlFor="phone">Phone Number</Label>
@@ -262,7 +465,7 @@ const Account = () => {
                         className="mt-1"
                       />
                     </div>
-                    
+
                     <div className="border-t pt-6 mt-6">
                       <h3 className="font-medium mb-4">Change Password</h3>
                       <div className="space-y-4">
@@ -301,13 +504,16 @@ const Account = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex gap-4 pt-4">
-                      <Button type="submit">Save Changes</Button>
-                      <Button 
-                        type="button" 
-                        variant="outline" 
+                      <Button type="submit" disabled={isSaving}>
+                        {isSaving ? "Saving..." : "Save Changes"}
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="outline"
                         onClick={() => setIsEditing(false)}
+                        disabled={isSaving}
                       >
                         Cancel
                       </Button>
@@ -317,12 +523,12 @@ const Account = () => {
               )}
             </div>
           </TabsContent>
-          
+
           {/* Orders Tab */}
           <TabsContent value="orders">
             <div className="space-y-8">
               <h2 className="text-xl font-medium">Order History</h2>
-              
+
               {orders.length > 0 ? (
                 <div className="space-y-6">
                   {orders.map(order => (
@@ -347,7 +553,7 @@ const Account = () => {
                           <p>${order.total.toFixed(2)}</p>
                         </div>
                       </div>
-                      
+
                       <div className="p-4">
                         <h3 className="font-medium mb-4">Items</h3>
                         <div className="space-y-4">
@@ -361,7 +567,7 @@ const Account = () => {
                             </div>
                           ))}
                         </div>
-                        
+
                         <div className="mt-6 flex justify-end">
                           <Button asChild>
                             <Link to={`/order/${order.id}`}>View Order Details</Link>
@@ -384,7 +590,7 @@ const Account = () => {
               )}
             </div>
           </TabsContent>
-          
+
           {/* Addresses Tab */}
           <TabsContent value="addresses">
             <div className="space-y-8">
@@ -392,49 +598,59 @@ const Account = () => {
                 <h2 className="text-xl font-medium">Saved Addresses</h2>
                 <Button>Add New Address</Button>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {addresses.map(address => (
-                  <div key={address.id} className="border rounded-lg p-6 relative">
-                    {address.default && (
-                      <span className="absolute top-2 right-2 bg-primary/10 text-primary text-xs py-1 px-2 rounded">
-                        Default
-                      </span>
-                    )}
-                    <h3 className="font-medium mb-2">{address.name}</h3>
-                    <p>{address.line1}</p>
-                    {address.line2 && <p>{address.line2}</p>}
-                    <p>{address.city}, {address.state} {address.zip}</p>
-                    <p>{address.country}</p>
-                    
-                    <div className="mt-4 pt-4 border-t flex gap-4">
-                      <Button size="sm" variant="outline">Edit</Button>
-                      {!address.default && (
-                        <Button size="sm" variant="outline">Set as Default</Button>
+
+              {addresses.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {addresses.map(address => (
+                    <div key={address.id} className="border rounded-lg p-6 relative">
+                      {address.default && (
+                        <span className="absolute top-2 right-2 bg-primary/10 text-primary text-xs py-1 px-2 rounded">
+                          Default
+                        </span>
                       )}
-                      <Button size="sm" variant="outline" className="text-destructive hover:text-destructive">
-                        Remove
-                      </Button>
+                      <h3 className="font-medium mb-2">{address.name}</h3>
+                      <p>{address.line1}</p>
+                      {address.line2 && <p>{address.line2}</p>}
+                      <p>{address.city}, {address.state} {address.zip}</p>
+                      <p>{address.country}</p>
+
+                      <div className="mt-4 pt-4 border-t flex gap-4">
+                        <Button size="sm" variant="outline">Edit</Button>
+                        {!address.default && (
+                          <Button size="sm" variant="outline">Set as Default</Button>
+                        )}
+                        <Button size="sm" variant="outline" className="text-destructive hover:text-destructive">
+                          Remove
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-10">
+                  <h3 className="font-medium mb-2">No saved addresses</h3>
+                  <p className="text-muted-foreground mb-6">
+                    You haven't added any addresses yet.
+                  </p>
+                  <Button>Add New Address</Button>
+                </div>
+              )}
             </div>
           </TabsContent>
-          
+
           {/* Wishlist Tab */}
           <TabsContent value="wishlist">
             <div className="space-y-8">
               <h2 className="text-xl font-medium">Your Wishlist</h2>
-              
+
               {wishlist.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {wishlist.map(item => (
                     <div key={item.id} className="border rounded-lg overflow-hidden">
                       <div className="aspect-square">
-                        <img 
-                          src={item.image} 
-                          alt={item.name} 
+                        <img
+                          src={item.image}
+                          alt={item.name}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -442,8 +658,23 @@ const Account = () => {
                         <h3 className="font-medium mb-1">{item.name}</h3>
                         <p className="text-muted-foreground mb-4">${item.price.toFixed(2)}</p>
                         <div className="flex gap-2">
-                          <Button className="flex-1">Add to Cart</Button>
-                          <Button variant="outline" className="text-destructive">
+                          <Button
+                            className="flex-1"
+                            onClick={() => {
+                              addToCart(item);
+                              toast.success(`${item.name} added to cart`);
+                            }}
+                          >
+                            Add to Cart
+                          </Button>
+                          <Button
+                            variant="outline"
+                            className="text-destructive"
+                            onClick={() => {
+                              removeFromWishlist(item.id);
+                              toast.success(`${item.name} removed from wishlist`);
+                            }}
+                          >
                             Remove
                           </Button>
                         </div>
@@ -464,30 +695,12 @@ const Account = () => {
               )}
             </div>
           </TabsContent>
-          
-          {/* Payment Methods Tab */}
-          <TabsContent value="payment">
-            <div className="space-y-8">
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-medium">Payment Methods</h2>
-                <Button>Add Payment Method</Button>
-              </div>
-              
-              <div className="text-center py-10">
-                <h3 className="font-medium mb-2">No saved payment methods</h3>
-                <p className="text-muted-foreground mb-6">
-                  You haven't saved any payment methods yet.
-                </p>
-                <Button>Add Payment Method</Button>
-              </div>
-            </div>
-          </TabsContent>
-          
+
           {/* Settings Tab */}
           <TabsContent value="settings">
             <div className="space-y-8 max-w-2xl">
               <h2 className="text-xl font-medium">Account Settings</h2>
-              
+
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
@@ -500,19 +713,7 @@ const Account = () => {
                     <Button variant="outline">Manage Preferences</Button>
                   </div>
                 </div>
-                
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <h3 className="font-medium">Change Email</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Update your account email address
-                    </p>
-                  </div>
-                  <div>
-                    <Button variant="outline">Update Email</Button>
-                  </div>
-                </div>
-                
+
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <h3 className="font-medium">Close Account</h3>
@@ -526,12 +727,23 @@ const Account = () => {
                     </Button>
                   </div>
                 </div>
+
+                <div className="pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={handleLogout}
+                    className="flex items-center"
+                  >
+                    <LogOut size={18} className="mr-2" />
+                    Logout
+                  </Button>
+                </div>
               </div>
             </div>
           </TabsContent>
         </Tabs>
       </main>
-      
+
       <Footer />
     </div>
   );

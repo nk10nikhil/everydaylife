@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Minus, Plus, ArrowLeft, Check, Star, ShoppingBag, Heart } from "lucide-react";
@@ -14,18 +13,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const ProductDetail = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const { addToCart, addToWishlist, isInWishlist, removeFromWishlist } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  
+
   // Find the product
   const product = products.find(p => p.id === productId);
-  
+
   // Get related products
   const relatedProducts = products
     .filter(p => p.category === product?.category && p.id !== product?.id)
     .slice(0, 4);
-  
+
   // If product not found
   if (!product) {
     return (
@@ -48,7 +47,9 @@ const ProductDetail = () => {
       </div>
     );
   }
-  
+
+  const productInWishlist = isInWishlist(product.id);
+
   // Create dummy image gallery
   const imageGallery = [
     product.image,
@@ -56,52 +57,73 @@ const ProductDetail = () => {
     product.image.replace('?q=80&w=700', '?q=80&w=700&sig=2'),
     product.image.replace('?q=80&w=700', '?q=80&w=700&sig=3'),
   ];
-  
+
   // Handle quantity changes
   const decreaseQuantity = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1));
   };
-  
+
   const increaseQuantity = () => {
     setQuantity(prev => prev + 1);
   };
-  
+
   // Handle add to cart
   const handleAddToCart = () => {
     addToCart(product, quantity);
-    toast.success(`${product.name} added to cart`);
+    toast.success(`${product.name} added to cart`, {
+      action: {
+        label: "View Cart",
+        onClick: () => navigate("/cart")
+      }
+    });
   };
-  
+
+  // Handle wishlist toggle
+  const handleWishlistToggle = () => {
+    if (productInWishlist) {
+      removeFromWishlist(product.id);
+      toast.success(`${product.name} removed from wishlist`);
+    } else {
+      addToWishlist(product);
+      toast.success(`${product.name} added to wishlist`, {
+        action: {
+          label: "View Wishlist",
+          onClick: () => navigate("/wishlist")
+        }
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      
+
       <main className="flex-grow">
         <div className="container-custom py-10">
           <Button variant="ghost" className="mb-6" onClick={() => navigate(-1)}>
             <ArrowLeft className="mr-2" size={18} />
             Back
           </Button>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
             {/* Product Images */}
             <div>
               <div className="mb-4">
-                <img 
-                  src={imageGallery[selectedImage]} 
-                  alt={product.name} 
+                <img
+                  src={imageGallery[selectedImage]}
+                  alt={product.name}
                   className="w-full aspect-square object-cover"
                 />
               </div>
               <div className="grid grid-cols-4 gap-4">
                 {imageGallery.map((img, idx) => (
-                  <button 
+                  <button
                     key={idx}
                     className={`aspect-square ${selectedImage === idx ? 'ring-2 ring-primary' : 'hover:opacity-80'}`}
                     onClick={() => setSelectedImage(idx)}
                   >
-                    <img 
-                      src={img} 
+                    <img
+                      src={img}
                       alt={`${product.name} view ${idx + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -109,14 +131,14 @@ const ProductDetail = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* Product Info */}
             <div>
               <div className="mb-6">
                 <h1 className="text-3xl font-serif mb-2">{product.name}</h1>
                 <p className="text-2xl">${product.price.toFixed(2)}</p>
               </div>
-              
+
               <div className="flex items-center mb-6">
                 <div className="flex">
                   {Array.from({ length: 5 }).map((_, idx) => (
@@ -127,45 +149,51 @@ const ProductDetail = () => {
                   4.9 (24 reviews)
                 </span>
               </div>
-              
+
               <p className="text-muted-foreground mb-6">
                 {product.description}
               </p>
-              
+
               <div className="space-y-6 mb-8">
                 <div>
                   <h3 className="font-medium mb-2">Quantity</h3>
                   <div className="flex w-fit border rounded">
-                    <button 
+                    <button
                       className="w-10 h-10 flex items-center justify-center hover:bg-secondary"
                       onClick={decreaseQuantity}
+                      aria-label="Decrease quantity"
                     >
                       <Minus size={16} />
                     </button>
                     <span className="w-12 h-10 flex items-center justify-center">
                       {quantity}
                     </span>
-                    <button 
+                    <button
                       className="w-10 h-10 flex items-center justify-center hover:bg-secondary"
                       onClick={increaseQuantity}
+                      aria-label="Increase quantity"
                     >
                       <Plus size={16} />
                     </button>
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-4 mb-8">
                 <Button className="flex-1 sm:flex-none" onClick={handleAddToCart}>
                   <ShoppingBag className="mr-2" size={18} />
                   Add to Cart
                 </Button>
-                <Button variant="outline" className="flex-1 sm:flex-none">
-                  <Heart className="mr-2" size={18} />
-                  Save to Wishlist
+                <Button
+                  variant={productInWishlist ? "default" : "outline"}
+                  className={`flex-1 sm:flex-none ${productInWishlist ? "bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary" : ""}`}
+                  onClick={handleWishlistToggle}
+                >
+                  <Heart className={`mr-2 ${productInWishlist ? "fill-primary" : ""}`} size={18} />
+                  {productInWishlist ? "Saved" : "Save to Wishlist"}
                 </Button>
               </div>
-              
+
               <div className="space-y-4 text-sm">
                 <div className="flex items-start">
                   <Check size={16} className="mr-2 mt-1 text-primary" />
@@ -182,7 +210,7 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Product tabs */}
           <Tabs defaultValue="details" className="mb-20">
             <TabsList className="grid w-full grid-cols-3">
@@ -244,7 +272,7 @@ const ProductDetail = () => {
                   <span className="font-medium">4.9 out of 5</span>
                   <span className="text-muted-foreground ml-2">Based on 24 reviews</span>
                 </div>
-                
+
                 <div className="space-y-6">
                   {/* Sample reviews */}
                   {Array.from({ length: 3 }).map((_, idx) => (
@@ -264,12 +292,12 @@ const ProductDetail = () => {
                     </div>
                   ))}
                 </div>
-                
+
                 <Button>Write a Review</Button>
               </div>
             </TabsContent>
           </Tabs>
-          
+
           {/* Related Products */}
           {relatedProducts.length > 0 && (
             <div>
@@ -283,7 +311,7 @@ const ProductDetail = () => {
           )}
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
