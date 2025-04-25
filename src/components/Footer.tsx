@@ -15,7 +15,7 @@ const Footer = () => {
               placeholder="Your email address"
               className="flex-1 py-3 px-4 border border-r-0 rounded-l-md focus:outline-none"
             />
-            <button className="bg-primary text-white px-4 rounded-r-md flex items-center">
+            <button title="o" className="bg-primary text-white px-4 rounded-r-md flex items-center">
               <Send size={18} />
             </button>
           </div>
