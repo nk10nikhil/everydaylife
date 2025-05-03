@@ -43,7 +43,8 @@ const FeaturedCollections = () => {
           {collections.map((collection) => (
             <Link
               key={collection.id}
-              to={`/collections/${collection.id}`}
+              // to={`/collections/${collection.id}`}
+              to="/shop"
               className="group relative overflow-hidden aspect-[4/5] rounded-lg"
             >
               <img

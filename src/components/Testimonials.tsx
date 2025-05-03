@@ -4,24 +4,24 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Johnson",
+    name: "Priya Sharma",
     role: "Interior Designer",
     content: "The quality of their products is outstanding. Every piece tells a story and adds character to my clients' spaces.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150"
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150"
   },
   {
     id: 2,
-    name: "Michael Chen",
+    name: "Raj Patel",
     role: "Home Owner",
     content: "I'm impressed by the attention to detail in every item. Their customer service is exceptional too!",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150"
+    image: "https://images.unsplash.com/photo-1580518324671-c2f0833a3af3?q=80&w=150"
   },
   {
     id: 3,
-    name: "Emma Davis",
+    name: "Meera Agarwal",
     role: "Architect",
     content: "Their minimalist designs perfectly balance form and function. A go-to source for modern interiors.",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150"
+    image: "https://images.unsplash.com/photo-1569124589354-615739ae007b?q=80&w=150"
   }
 ];
 

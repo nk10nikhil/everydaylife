@@ -106,7 +106,8 @@ const HomePage = () => {
             <div className="grid grid-cols-2 grid-rows-2 sm:grid-cols-2 sm:grid-rows-2 lg:grid-cols-3 lg:grid-rows-1 gap-4 sm:gap-8">
               {categories.slice(0, 3).map(category => (
                 <Link
-                  to={`/category/${category.id}`}
+                  // to={`/category/${category.id}`}
+                  to="/shop"
                   key={category.id}
                   className="group relative overflow-hidden aspect-square rounded-lg"
                 >
@@ -151,7 +152,7 @@ const HomePage = () => {
           <div className="container-custom">
             <div className="flex flex-col md:flex-row justify-between items-baseline mb-10">
               <h2 className="text-3xl md:text-4xl font-serif">New Arrivals</h2>
-              <Link to="/shop/new-arrivals" className="flex items-center group text-muted-foreground hover:text-foreground transition-colors mt-4 md:mt-0">
+              <Link to="/shop" className="flex items-center group text-muted-foreground hover:text-foreground transition-colors mt-4 md:mt-0">
                 View All New Arrivals
                 <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -263,6 +264,7 @@ const HomePage = () => {
             </a>
           </div>
         </section>
+
       </main>
 
       <Footer />

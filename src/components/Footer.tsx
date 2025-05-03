@@ -15,7 +15,27 @@ const Footer = () => {
               placeholder="Your email address"
               className="flex-1 py-3 px-4 border border-r-0 rounded-l-md focus:outline-none"
             />
-            <button title="o" className="bg-primary text-white px-4 rounded-r-md flex items-center">
+            <button 
+              type="button"
+              title="Subscribe" 
+              className="bg-primary text-white px-4 rounded-r-md flex items-center"
+              onClick={(e) => {
+                e.preventDefault();
+                const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                if (input) {
+                  input.value = "";
+                  const parentDiv = input.parentElement;
+                  if (parentDiv) {
+                    parentDiv.style.position = "relative";
+                    const message = document.createElement("span");
+                    message.className = "text-green-600 text-sm absolute -bottom-6 left-0";
+                    message.textContent = "Subscribed successfully!";
+                    parentDiv.appendChild(message);
+                    setTimeout(() => message.remove(), 3000);
+                  }
+                }
+              }}
+            >
               <Send size={18} />
             </button>
           </div>
@@ -29,7 +49,7 @@ const Footer = () => {
               A curated collection of minimalist and aesthetic products designed to elevate your everyday life.
             </p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-              <p>Delhi, India</p>
+              <p>GCET, Greater Noida</p>
               <p>Phone: +91 7777048666</p>
               <p>Email: nk10nikhil@gmail.com</p>
             </div>
@@ -50,10 +70,10 @@ const Footer = () => {
           <div>
             <h4 className="font-medium mb-4">Shop</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/shop/new-arrivals" className="text-muted-foreground hover:text-primary">New Arrivals</Link></li>
-              <li><Link to="/shop/bestsellers" className="text-muted-foreground hover:text-primary">Bestsellers</Link></li>
-              <li><Link to="/shop/sale" className="text-muted-foreground hover:text-primary">Sale</Link></li>
-              <li><Link to="/shop/collections" className="text-muted-foreground hover:text-primary">Collections</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">New Arrivals</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Bestsellers</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Sale</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Collections</Link></li>
             </ul>
           </div>
 
@@ -61,10 +81,10 @@ const Footer = () => {
           <div>
             <h4 className="font-medium mb-4">Support</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/contact" className="text-muted-foreground hover:text-primary">Contact Us</Link></li>
-              <li><Link to="/shipping" className="text-muted-foreground hover:text-primary">Shipping & Returns</Link></li>
-              <li><Link to="/faq" className="text-muted-foreground hover:text-primary">FAQs</Link></li>
-              <li><Link to="/size-guide" className="text-muted-foreground hover:text-primary">Size Guide</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Contact Us</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Shipping & Returns</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">FAQs</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Size Guide</Link></li>
             </ul>
           </div>
 
@@ -72,10 +92,10 @@ const Footer = () => {
           <div>
             <h4 className="font-medium mb-4">Company</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/about" className="text-muted-foreground hover:text-primary">Our Story</Link></li>
-              <li><Link to="/sustainability" className="text-muted-foreground hover:text-primary">Sustainability</Link></li>
-              <li><Link to="/terms" className="text-muted-foreground hover:text-primary">Terms & Conditions</Link></li>
-              <li><Link to="/privacy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Our Story</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Sustainability</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Terms & Conditions</Link></li>
+              <li><Link to="/#" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>
