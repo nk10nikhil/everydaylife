@@ -8,7 +8,7 @@ import { Package } from "lucide-react";
 const collections = [
   {
     id: "summer-2024",
-    name: "Summer 2024",
+    name: "Summer 2025",
     description: "Light and airy pieces perfect for the warmer months",
     image: "https://images.unsplash.com/photo-1589834390005-5d4fb9bf3d32?q=80&w=700",
   },

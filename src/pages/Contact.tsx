@@ -143,7 +143,7 @@ const Contact = () => {
                       <h3 className="font-medium mb-2">Our Location</h3>
                       <p className="text-muted-foreground">
                         Every Day Life<br />
-                        Delhi, India
+                        GCET, Greater Noida, UP, India
                       </p>
                     </div>
                   </div>

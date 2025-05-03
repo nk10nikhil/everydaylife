@@ -46,13 +46,23 @@ const About = () => {
                   We work closely with skilled artisans and ethical manufacturers to ensure that our products meet the highest standards of quality and sustainability. From the materials we source to the packaging we use, every decision is made with care.
                 </p>
               </div>
-              <div>
-                <img
-                  src="https://images.unsplash.com/photo-1606744837616-2c89552a118e?q=80&w=800"
-                  alt="Our products being crafted"
-                  className="rounded-lg shadow-lg"
-                />
-              </div>
+                <div>
+                  <div className="relative h-full rounded-lg overflow-hidden shadow-lg">
+                    <div className="absolute inset-0 bg-neutral-200 animate-pulse"></div>
+                    <div className="relative z-10 p-6 h-full flex flex-col justify-center">
+                      <div className="w-16 h-16 mb-4 mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                      </div>
+                      <h3 className="text-lg font-medium text-center mb-2">Thoughtfully Designed</h3>
+                      <p className="text-sm text-center text-muted-foreground">
+                        Our home decor pieces are crafted with intention, bringing warmth and mindfulness to your everyday spaces.
+                      </p>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </section>
